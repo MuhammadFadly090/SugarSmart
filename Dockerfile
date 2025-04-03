@@ -1,26 +1,28 @@
-# Gunakan image Python yang sesuai
-FROM python:3.10-slim
+# Base image
+FROM python:3.9-slim
 
-# Install PostgreSQL development libraries (untuk pg_config)
-RUN apt-get update && \
-    apt-get install -y libpq-dev && \
-    rm -rf /var/lib/apt/lists/*
+# Install system dependencies for psycopg2 and other Python packages
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    curl
+
+# Install Rust (for building extensions that require it)
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+ENV PATH="/root/.cargo/bin:${PATH}"
 
 # Set working directory
 WORKDIR /app
 
-# Salin file requirements.txt ke container
+# Copy the requirements file
 COPY requirements.txt /app/
 
-# Install dependensi
+# Install dependencies
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# Salin semua file aplikasi ke container
+# Copy the rest of the application code
 COPY . /app/
 
-# Tentukan port yang digunakan oleh aplikasi
-EXPOSE 5000
-
-# Command untuk menjalankan aplikasi
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:$PORT", "app:app"]
+# Set the command to run the app
+CMD ["python", "app.py"]
