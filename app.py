@@ -47,7 +47,7 @@ migrate = Migrate(app, db)
 csrf = CSRFProtect(app)
 
 # Nonaktifkan CSRF hanya untuk endpoint /predict
-csrf.exempt("/predict")
+#csrf.exempt("/predict")
 
 # Inisialisasi serializer untuk token
 serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
@@ -235,7 +235,7 @@ def dashboard():
 
 # Rute predict
 @app.route('/predict', methods=['POST'])
-@csrf.exempt 
+#@csrf.exempt 
 def predict():
     if 'user_id' not in session:
         flash('Silakan login terlebih dahulu.')
