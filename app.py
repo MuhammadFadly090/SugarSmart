@@ -32,7 +32,8 @@ app = Flask(__name__)
 
 # Konfigurasi aplikasi Flask dengan SECRET_KEY, dan koneksi database menggunakan SQLAlchemy 
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'supersecretkey') 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'mysql://root:root123@localhost/taflask?charset=utf8mb4')
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'mysql://root:root123@localhost/taflask?charset=utf8mb4')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://neondb_owner:npg_O6D4xutkfIFy@ep-withered-frost-a1h3mrq8-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
