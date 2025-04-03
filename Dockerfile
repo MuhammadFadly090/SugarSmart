@@ -1,21 +1,26 @@
-# Gunakan image Python versi 3.9 sebagai dasar
-FROM python:3.9-slim
+# Gunakan image Python yang sesuai
+FROM python:3.10-slim
 
-# Tentukan direktori kerja di dalam container
+# Install PostgreSQL development libraries (untuk pg_config)
+RUN apt-get update && \
+    apt-get install -y libpq-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+# Set working directory
 WORKDIR /app
 
-# Salin file requirements.txt ke dalam container
+# Salin file requirements.txt ke container
 COPY requirements.txt /app/
 
-# Install dependensi dari requirements.txt
+# Install dependensi
 RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
+    pip install --no-cache-dir -r requirements.txt
 
-# Salin seluruh aplikasi ke dalam container
+# Salin semua file aplikasi ke container
 COPY . /app/
 
-# Tentukan port yang akan digunakan oleh aplikasi Flask
-EXPOSE 8000
+# Tentukan port yang digunakan oleh aplikasi
+EXPOSE 5000
 
-# Tentukan perintah untuk menjalankan aplikasi menggunakan gunicorn
-CMD ["gunicorn", "-b", "0.0.0.0:8000", "app:app"]
+# Command untuk menjalankan aplikasi
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:$PORT", "app:app"]
