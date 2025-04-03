@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
     curl
 
 # Install Rust (for building extensions that require it)
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 
 # Set working directory
