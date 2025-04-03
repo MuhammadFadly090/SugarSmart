@@ -341,7 +341,7 @@ def predict():
         # Lakukan prediksi
         prediction = model.predict(features_array)
         result = prediction[0] if isinstance(prediction, np.ndarray) else prediction
-        prediction_string = "Diabetic" if result == 1 else "Non-Diabetic"
+        prediction_string = "Beresiko Diabetes" if result == 1 else "Tidak Beresiko Diabetes"
 
         # Menyimpan data ke database
         new_riwayat = Riwayat(
@@ -417,15 +417,15 @@ def riwayat():
     if 'user_id' not in session:
         flash('Silakan login terlebih dahulu.')
         return redirect(url_for('login'))
-    
-    # Ambil parameter filter nama dari URL
+
+    user_id = session['user_id']  # Ambil user_id dari session
     filter_name = request.args.get('name', '')
 
-    # Query data dari database
+    # Query hanya riwayat milik user yang sedang login
     if filter_name:
-        riwayat_data = Riwayat.query.filter(Riwayat.name.contains(filter_name)).all()
+        riwayat_data = Riwayat.query.filter_by(user_id=user_id).filter(Riwayat.name.contains(filter_name)).all()
     else:
-        riwayat_data = Riwayat.query.all()
+        riwayat_data = Riwayat.query.filter_by(user_id=user_id).all()
 
     return render_template('riwayat.html', riwayat_data=riwayat_data, filter_name=filter_name)
 
