@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Prediksi</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesRiwayat.css') }}">
+</head>
+<body>
+    {% extends 'base.html' %}
+    
+    {% block content %}
+    <header>
+        <h1>Riwayat</h1>
+    </header>
+    <br>
+    <div class="riwayat-container">
+        <h1 class="mb-4">Riwayat Prediksi</h1>
+
+        <!-- Form Filter by Name -->
+        <form method="GET" action="{{ url_for('riwayat') }}" class="mb-4">
+            <div class="input-group">
+                <input type="text" name="name" class="form-control" placeholder="Cari berdasarkan nama..." value="{{ filter_name }}">
+                <button type="submit" class="btn btn-primary">Cari</button>
+            </div>
+        </form>
+
+        <!-- Tabel Riwayat -->
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Hasil Prediksi</th>
+                    <th>Tanggal Periksa</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in riwayat_data %}
+                <tr>
+                    <td>{{ loop.index }}</td> <!-- Nomor urut -->
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.prediction }}</td>
+                    <td>{{ data.created_at.strftime('%d-%m-%Y') }}</td> <!-- Format tanggal -->
+                    <td>
+                        <!-- Tombol Lihat -->
+                        <a href="{{ url_for('detail_prediksi', id=data.id) }}" class="btn btn-info btn-sm">Lihat</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center">Tidak ada data ditemukan.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% endblock %}
+</body>
+</html>

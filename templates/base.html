@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesHome.css') }}">
+    <title>Your Page Title</title>
+</head>
+<body>
+    <button class="navbar-toggle" id="navbarToggle">&#9776;</button>
+
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            {% include 'navbar.html' %}
+        </aside>
+
+        <div class="main-content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbarToggle = document.getElementById('navbarToggle');
+            const sidebar = document.getElementById('sidebar');
+
+            navbarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

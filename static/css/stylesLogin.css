@@ -1,0 +1,130 @@
+body {
+    font-family: 'Figtree', sans-serif;
+    background-color: #FDF6E3; /* Soft background color */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px; /* Mengubah max-width menjadi lebih lebar */
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 2.2rem;
+    color: #FF2D20; /* Main accent color */
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.logo {
+    width: 120px; /* Adjust width to make logo larger */
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 2px solid #FF2D20;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #333;
+    box-sizing: border-box;
+}
+
+input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+.remember-me {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+}
+
+button {
+    background-color: #FF2D20;
+    color: white;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button:hover {
+    background-color: #E02418;
+}
+
+/* Link and text positioning */
+.forgot-password {
+    text-decoration: none;
+    font-size: 0.875rem;
+    color: #FF2D20;
+    margin-top: 1rem;
+    display: inline-block;
+    text-align: left;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.form-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.form-footer p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-footer a {
+    font-size: 0.875rem;
+    color: #FF2D20;
+    text-decoration: none;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+}
+
+.create-account {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    color: #FF2D20;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.create-account:hover {
+    text-decoration: underline;
+}

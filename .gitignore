@@ -1,0 +1,30 @@
+# Ignore virtual environment
+venv/
+
+# Bytecode files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment variables
+.env
+*.env
+
+# VS Code settings
+.vscode/
+
+
+# Logs and database
+*.log
+*.sqlite3
+instance/
+migrations/
+
+# Ignore Jupyter Notebook checkpoints (jika pakai Jupyter)
+.ipynb_checkpoints/
+
+# Ignore compiled Python files
+*.egg-info/
+dist/
+build/

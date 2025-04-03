@@ -1,0 +1,176 @@
+/* Container untuk Riwayat */
+.riwayat-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Container untuk menyusun informasi pengguna dan hasil prediksi dalam satu baris */
+.info-prediction-container {
+    display: flex;
+    justify-content: space-between; /* Membuat info di kiri dan prediksi di kanan */
+    align-items: center; /* Rata tengah secara vertikal */
+    gap: 20px; /* Jarak antara info dan hasil prediksi */
+}
+
+
+/* Bagian informasi (Nama, Usia, dll.) */
+.info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Jarak antar baris */
+    max-width: 400px; /* Batasi lebar agar tetap rapi */
+}
+
+/* Gaya Tabel */
+.table {
+    width: 100%; /* Lebar tabel 100% */
+    border-collapse: collapse; /* Gabungkan border sel */
+    margin-bottom: 20px; /* Jarak bawah tabel */
+}
+
+/* Header Tabel */
+.table thead th {
+    background-color: #007bff; /* Warna latar header */
+    color: #ffffff; /* Warna teks header */
+    padding: 12px; /* Padding sel header */
+    text-align: left; /* Teks rata kiri */
+    border-bottom: 2px solid #0056b3; /* Garis bawah header */
+}
+
+/* Baris Tabel */
+.table tbody tr {
+    border-bottom: 1px solid #ddd; /* Garis bawah setiap baris */
+}
+
+/* Sel Tabel */
+.table tbody td {
+    padding: 12px; /* Padding sel */
+    text-align: left; /* Teks rata kiri */
+}
+
+/* Efek Hover pada Baris Tabel */
+.table tbody tr:hover {
+    background-color: #f1f1f1; /* Warna latar saat hover */
+}
+
+/* Kotak putih untuk hasil prediksi */
+.prediction-box {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    min-width: 250px; /* Agar tidak terlalu kecil */
+}
+
+/* Judul dalam kotak */
+.prediction-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Mengatur label dan nilai dalam satu baris */
+.info-item {
+    display: flex;
+    align-items: center; /* Agar teks sejajar secara vertikal */
+    gap: 10px; /* Jarak antara label dan nilai */
+}
+
+/* Label (Nama, Usia, dll.) */
+.info-item strong {
+    min-width: 150px; /* Menentukan lebar minimum agar sejajar */
+    text-align: left;
+    display: inline-block;
+}
+
+/* Nilai (Ada, 24-02-2025, dll.) */
+.info-item span {
+    text-align: left;
+    display: inline-block;
+}
+
+/* Kotak biru untuk hasil prediksi */
+.prediction-result {
+    background-color: #3498db;
+    color: white;
+    padding: 15px;
+    border-radius: 30px; /* Sudut 30 derajat */
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+
+/* Tombol Aksi */
+.btn {
+    display: inline-block;
+    padding: 6px 12px; /* Padding tombol */
+    font-size: 14px; /* Ukuran font */
+    font-weight: 400; /* Ketebalan font */
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px; /* Sudut melengkung tombol */
+    transition: background-color 0.3s ease; /* Transisi warna latar */
+}
+
+/* Tombol Info (Lihat) */
+.btn-info {
+    background-color: #17a2b8; /* Warna latar tombol */
+    color: #ffffff; /* Warna teks tombol */
+    border-color: #17a2b8; /* Warna border tombol */
+}
+
+.btn-info:hover {
+    background-color: #138496; /* Warna latar saat hover */
+    border-color: #117a8b; /* Warna border saat hover */
+}
+
+/* Responsif: Saat layar lebih kecil dari 768px */
+@media (max-width: 768px) {
+    .riwayat-container {
+        padding: 10px; /* Padding lebih kecil */
+    }
+
+    .table thead {
+        display: none; /* Sembunyikan header pada layar kecil */
+    }
+
+    .table tbody tr {
+        display: block; /* Ubah tampilan baris menjadi block */
+        margin-bottom: 10px; /* Jarak antar baris */
+        border: 1px solid #ddd; /* Border untuk setiap baris */
+        border-radius: 4px; /* Sudut melengkung */
+    }
+
+    .table tbody td {
+        display: block; /* Ubah tampilan sel menjadi block */
+        text-align: right; /* Teks rata kanan */
+        padding: 8px; /* Padding sel */
+        border-bottom: 1px solid #ddd; /* Garis bawah sel */
+    }
+
+    .table tbody td::before {
+        content: attr(data-label); /* Tambahkan label dari data-label */
+        float: left; /* Teks label rata kiri */
+        font-weight: bold; /* Tebalkan teks label */
+        text-transform: uppercase; /* Ubah teks menjadi huruf kapital */
+    }
+
+    .table tbody td:last-child {
+        border-bottom: 0; /* Hilangkan garis bawah pada sel terakhir */
+    }
+}

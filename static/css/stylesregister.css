@@ -1,0 +1,104 @@
+body {
+    font-family: 'Figtree', sans-serif;
+    background-color: #FDF6E3; /* Soft background color */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: auto; /* Ensure scrollbar works if content exceeds window size */
+}
+
+.container {
+    text-align: center;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box; /* Prevents content from overflowing */
+}
+
+h2 {
+    font-size: 2rem;
+    color: #FF2D20; /* Main accent color */
+    margin-bottom: 2rem;
+}
+
+.logo {
+    width: 120px;
+    height: auto;
+    max-width: 100%; /* Ensure logo scales responsively */
+    margin-bottom: 1rem;
+}
+
+label {
+    text-align: left;
+    display: block;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1.5rem; /* Increased margin for spacing */
+    border: 2px solid #FF2D20;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box; /* Ensures padding doesn't affect the width */
+}
+
+button {
+    background-color: #FF2D20;
+    color: white;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #E02418;
+}
+
+.back-to-login {
+    font-size: 0.875rem;
+    color: #FF2D20;
+    margin-top: 1.5rem;
+    display: inline-block;
+}
+
+.back-to-login:hover {
+    text-decoration: underline;
+}
+
+/* Media Query for Responsiveness */
+@media (max-width: 600px) {
+    .container {
+        padding: 1rem;
+        width: 90%;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        padding: 1rem;
+    }
+
+    button {
+        padding: 0.75rem 1.5rem;
+    }
+}

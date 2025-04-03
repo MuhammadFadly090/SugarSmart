@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Prediksi</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesRiwayat.css') }}">
+</head>
+<body>
+    {% extends 'base.html' %}
+    
+    {% block content %}
+    <header>
+        <h1>Hasil Prediksi</h1>
+    </header>
+    <br>
+    <div class="riwayat-container">
+        <div class="card">
+            <div class="card-body">
+                
+                <br>
+                <div class="info-prediction-container">
+                    <div class="info-section">
+                        <div class="info-item">
+                            <strong>Nama</strong> <span>: {{ data.name }}</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>Usia</strong> <span>: {{ data.raw_Age }}</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>Jenis Kelamin</strong> <span>: {{ data.Sex }}</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>Tanggal Periksa</strong> <span>: {{ data.created_at }}</span>
+                        </div>
+                    </div>
+            
+                    <div class="prediction-box">
+                        <p class="prediction-title">Hasil Prediksi</p>
+                        <div class="prediction-result">
+                            {{ data.prediction }}
+                        </div>
+                    </div>
+                </div>  
+                <br>
+
+                <!-- Tabel untuk menampilkan detail fitur -->
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>No</th> <!-- Kolom Nomor -->
+                            <th>Fitur</th>
+                            <th>Nilai</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data Fitur -->
+                        <tr>
+                            <td>1</td>
+                            <td><strong>Tekanan Darah Tinggi</strong></td>
+                            <td>{{ data.HighBP }}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><strong>Kesehatan Umum (GenHlth)</strong></td>
+                            <td>{{ data.GenHlth }}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><strong>Kolesterol Tinggi (HighChol)</strong></td>
+                            <td>{{ data.HighChol }}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td><strong>Kategori BMI (BMI_Category)</strong></td>
+                            <td>{{ data.raw_BMI }}</td>
+                            <td>{{ data.BMI_Category }}</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td><strong>Kesulitan Berjalan (DiffWalk)</strong></td>
+                            <td>{{ data.DiffWalk }}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td><strong>Penyakit Jantung atau Serangan Jantung (HeartDiseaseorAttack)</strong></td>
+                            <td>{{ data.HeartDiseaseorAttack }}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td><strong>Kategori Kesehatan Fisik (PhysHlth_Category)</strong></td>
+                            <td>{{ data.raw_PhysHlth }}</td>
+                            <td>{{ data.PhysHlth_Category }}</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td><strong>Aktivitas Fisik (PhysActivity)</strong></td>
+                            <td>{{ data.PhysActivity }}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td><strong>Konsumsi Sayuran (Veggies)</strong></td>
+                            <td>{{ data.Veggies }}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td><strong>Konsumsi Buah (Fruits)</strong></td>
+                            <td>{{ data.Fruits }}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td><strong>Stroke</strong></td>
+                            <td>{{ data.Stroke }}</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Tombol Kembali -->
+                <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Kembali</a>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
+</body>
+</html>

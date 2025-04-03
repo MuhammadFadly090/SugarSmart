@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Prediksi Diabetes</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesDashboard.css') }}">
+</head>
+<body>
+    {% extends 'base.html' %}
+    
+    {% block content %}
+    <header>
+        <h1>Selamat datang, {{ username }}!</h1>
+    </header>
+
+    <div class="box-container">
+        <form id="mainForm" action="{{ url_for('predict') }}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            
+            <!-- Input untuk nama pasien -->
+            <div class="box">
+                <label for="name">Masukan Nama Pasien:</label>
+                <input type="text" id="name" name="name" required>
+                <br>
+                <!-- Container untuk pertanyaan -->
+                <div id="questionContainer"></div>
+
+                <!-- Input untuk kategori usia -->
+                <div id="ageInputContainer" style="display: none;">
+                    <label for="age">Masukkan Usia:</label>
+                    <input type="number" id="age" name="age" required>
+                    <p id="ageCategoryResult"></p>
+                    <input type="hidden" id="ageCategoryInput" name="age_category">
+                    <input type="hidden" id="rawAgeCategoryInput" name="raw_Age"> <!-- Tambahkan ini -->
+                </div>
+
+                <!-- Input untuk kategori kesehatan fisik -->
+                <div id="physHlthInputContainer" style="display: none;">
+                    <label for="physHlth">Jumlah Hari Kesehatan Buruk:</label>
+                    <input type="number" id="physHlth" name="physHlth" min="0" max="30" required>
+                    <p id="physHlthCategoryResult"></p>
+                    <input type="hidden" id="physHlthCategoryInput" name="physHlth_category">
+                    <input type="hidden" id="rawPhysHlthCategoryInput" name="raw_PhysHlth"> <!-- Tambahkan ini -->
+                </div>
+                
+                <!-- Kalkulator BMI -->
+                <div id="bmiCalculator" style="display: none;">
+                    <label for="weight">Berat Badan (kg):</label>
+                    <input type="number" id="weight" name="weight" step="0.1" required>               
+                    <label for="height">Tinggi Badan (cm):</label>
+                    <input type="number" id="height" name="height" step="0.1" required>  
+                    <br>
+                    <p id="bmiResult"></p>
+                    <br> 
+                    <button type="button" onclick="calculateBMI()">Hitung BMI</button>
+                
+                    <!-- Input hidden untuk menyimpan kategori BMI -->
+                    <input type="hidden" id="bmiCategoryInput" name="bmi_category">
+                    <input type="hidden" id="rawBMICategoryInput" name="raw_BMI"> <!-- Tambahkan ini -->
+                </div>
+                
+                <!-- Tombol Navigasi -->
+                <br>
+                <button type="button" id="nextButton">Selanjutnya</button>
+                <button type="submit" id="submitButton" style="display: none;">Prediksi</button>
+            </div>
+
+            <!-- Input tersembunyi untuk menyimpan fitur -->
+            <div id="hiddenInputs"></div>
+        </form>
+    </div>
+    
+    <script>
+        const questions = {{ questions | tojson | safe }};
+        const choices = {{ choices | tojson | safe }};
+        
+        let currentQuestionIndex = 0;
+        let selectedAnswers = {};
+    
+        function renderQuestion() {
+            const totalQuestions = Object.keys(questions).length;
+            if (currentQuestionIndex >= totalQuestions) return;
+    
+            const key = Object.keys(questions)[currentQuestionIndex];
+            const question = questions[key];
+            const options = choices[key];
+    
+            document.getElementById('questionContainer').innerHTML = `
+                <div class="question-group">
+                    <label>${question}</label>
+                    <div class="button-group">
+                        ${options.map(option => `
+                            <button type="button" class="choice-button ${selectedAnswers[key] === option[0] ? 'selected' : ''}" 
+                                    data-value="${option[0]}" data-question="${key}">
+                                ${option[1]}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+    
+            document.querySelectorAll('.choice-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll(`[data-question="${key}"]`).forEach(btn => btn.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedAnswers[key] = this.dataset.value;
+                    updateHiddenInputs();
+                    document.getElementById('nextButton').disabled = false;
+                });
+            });
+    
+            // Tampilkan input yang sesuai dengan kategori pertanyaan
+            document.getElementById('bmiCalculator').style.display = (key === "BMI_Category") ? 'block' : 'none';
+            document.getElementById('ageInputContainer').style.display = (key === "Age_Category") ? 'block' : 'none';
+            document.getElementById('physHlthInputContainer').style.display = (key === "PhysHlth_Category") ? 'block' : 'none';
+    
+            // Update tampilan tombol
+            document.getElementById('nextButton').style.display = (currentQuestionIndex === totalQuestions - 1) ? 'none' : 'inline-block';
+            document.getElementById('submitButton').style.display = (currentQuestionIndex === totalQuestions - 1) ? 'inline-block' : 'none';
+        }
+    
+        function calculateBMI() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value) / 100;
+    
+            if (isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
+                alert("Masukkan berat dan tinggi yang valid.");
+                return;
+            }
+    
+            const bmi = weight / (height * height);
+            let category = "";
+            
+            if (bmi <= 18.4) category = "Kurus (Underweight)";
+            else if (bmi <= 25.0) category = "Normal (Ideal)";
+            else category = "Gemuk (Overweight)";
+    
+            // Simpan nilai raw BMI dan kategori
+            document.getElementById('bmiResult').textContent = `BMI Anda: ${bmi.toFixed(2)} (${category})`;
+            document.getElementById('bmiCategoryInput').value = category;
+            document.getElementById('rawBMICategoryInput').value = bmi.toFixed(2); // Simpan nilai raw
+            
+            selectedAnswers["BMI_Category"] = category;
+            updateHiddenInputs();
+            document.getElementById('nextButton').disabled = false;
+        }
+    
+        function categorizeAge() {
+            const ageInput = document.getElementById('age');
+            const age = parseInt(ageInput.value);
+            let category = "";
+    
+            if (isNaN(age) || age < 0) {
+                alert("Masukkan usia yang valid.");
+                return;
+            }
+    
+            if (age < 5) category = "Bayi dan Balita";
+            else if (age <= 9) category = "Anak-Anak";
+            else if (age <= 18) category = "Remaja";
+            else if (age <= 59) category = "Dewasa";
+            else category = "Lansia";
+    
+            // Simpan nilai raw usia dan kategori
+            document.getElementById('ageCategoryResult').textContent = `Kategori Usia: ${category}`;
+            document.getElementById('ageCategoryInput').value = category;
+            document.getElementById('rawAgeCategoryInput').value = age; // Simpan nilai raw
+            
+            selectedAnswers["Age_Category"] = category;
+            updateHiddenInputs();
+            document.getElementById('nextButton').disabled = false;
+        }
+    
+        function categorizePhysHlth() {
+            const physHlthInput = document.getElementById('physHlth');
+            const physHlth = parseInt(physHlthInput.value);
+            let category = "";
+    
+            if (isNaN(physHlth)) {
+                alert("Masukkan jumlah hari yang valid.");
+                return;
+            }
+    
+            if (physHlth === 0) category = "Sehat";
+            else if (physHlth <= 5) category = "Sedikit Tidak Sehat";
+            else if (physHlth <= 15) category = "Cukup Tidak Sehat";
+            else category = "Sangat Tidak Sehat";
+    
+            // Simpan nilai raw hari dan kategori
+            document.getElementById('physHlthCategoryResult').textContent = `Kategori Kesehatan: ${category}`;
+            document.getElementById('physHlthCategoryInput').value = category;
+            document.getElementById('rawPhysHlthCategoryInput').value = physHlth; // Simpan nilai raw
+            
+            selectedAnswers["PhysHlth_Category"] = category;
+            updateHiddenInputs();
+            document.getElementById('nextButton').disabled = false;
+        }
+    
+        function nextQuestion() {
+            const key = Object.keys(questions)[currentQuestionIndex];
+            
+            // Validasi input khusus
+            if (!selectedAnswers[key]) {
+                let errorMessage = "Silakan isi pertanyaan ini terlebih dahulu.";
+                if (key === "BMI_Category") errorMessage = "Silakan hitung BMI terlebih dahulu!";
+                else if (key === "Age_Category") errorMessage = "Silakan masukkan usia yang valid!";
+                else if (key === "PhysHlth_Category") errorMessage = "Silakan masukkan jumlah hari yang valid!";
+                alert(errorMessage);
+                return;
+            }
+    
+            currentQuestionIndex++;
+            renderQuestion();
+        }
+    
+        function updateHiddenInputs() {
+            const rawAge = document.getElementById('rawAgeCategoryInput').value;
+            const rawBMI = document.getElementById('rawBMICategoryInput').value;
+            const rawPhysHlth = document.getElementById('rawPhysHlthCategoryInput').value;
+    
+            document.getElementById('hiddenInputs').innerHTML = 
+                Object.entries(selectedAnswers).map(([k, v]) => 
+                    `<input type="hidden" name="features[]" value="${k}:${v}">`
+                ).join('') +
+                `<input type="hidden" name="raw_Age" value="${rawAge}">` +
+                `<input type="hidden" name="raw_BMI" value="${rawBMI}">` +
+                `<input type="hidden" name="raw_PhysHlth" value="${rawPhysHlth}">`;
+        }
+    
+        // Event listeners
+        document.getElementById('age').addEventListener('input', categorizeAge);
+        document.getElementById('physHlth').addEventListener('input', categorizePhysHlth);
+        document.getElementById('nextButton').addEventListener('click', nextQuestion);
+    
+        // Inisialisasi
+        renderQuestion();
+    </script>
+    {% endblock %}
+</body>
+</html>

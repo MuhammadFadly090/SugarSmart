@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesregister.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="SugarSmart Logo" class="logo">
+        <h2>Register to SugarSmart</h2>
+
+        <!-- Flash message for feedback -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flash-messages">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+
+        <!-- Form Register -->
+        <form method="POST" action="{{ url_for('register') }}">
+            {{ form.hidden_tag() }}  <!-- CSRF Token -->
+
+            <!-- Username -->
+            <div>
+                <label for="username">Username</label>
+                {{ form.username() }}
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label for="email">Email</label>
+                {{ form.email() }}
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label for="password">Password</label>
+                {{ form.password() }}
+            </div>
+
+            <!-- Confirm Password -->
+            <div>
+                <label for="password_confirmation">Confirm Password</label>
+                {{ form.password_confirmation() }}
+            </div>
+
+            <!-- Submit Button -->
+            <div>
+                <button type="submit">Register</button>
+            </div>
+        </form>
+
+        <p class="back-to-login">Already have an account? <a href="{{ url_for('login') }}">Login here</a>.</p>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesLogin.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="SugarSmart Logo" class="logo">
+        <h1>Login to SugarSmart</h1>
+
+        <!-- Display Session Status if any -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="alert alert-success">
+            {{ messages[0] }}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <!-- Login Form -->
+        <form method="POST" action="{{ url_for('login') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <!-- Username -->
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required autofocus autocomplete="new-username">
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required autocomplete="current-password">
+            </div>
+
+            <!-- Remember Me -->
+            <div class="remember-me">
+                <input type="checkbox" id="remember_me" name="remember">
+                <label for="remember_me">Remember me</label>
+            </div>
+
+            <!-- Forgot Password -->
+            <div>
+                <a class="forgot-password" href="{{ url_for('forgot_password') }}">Forgot your password?</a>
+            </div>
+
+            <!-- Login Button -->
+            <div>
+                <button type="submit">Log in</button>
+            </div>
+        </form>
+
+        <!-- Create Account Link -->
+        <div class="form-footer">
+            <p>Don't have an account?</p>
+            <a class="create-account" href="{{ url_for('register') }}">Create an Account</a>
+        </div>
+    </div>
+
+</body>
+</html>

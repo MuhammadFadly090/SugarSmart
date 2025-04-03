@@ -1,0 +1,146 @@
+/* Box Container */
+.box-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 1250px; /* Maksimal lebar container */
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    align-items: center; /* Konten tetap di tengah */
+    justify-content: center;
+    width: 100%;
+}
+
+/* Box lebih lebar di mode desktop */
+.box {
+    width: 1220px;
+    max-width: 1220px; /* Lebar tetap maksimal */
+    min-height: 300px; /* Menentukan tinggi minimal agar kotak tidak mengecil */
+    height: auto; /* Memastikan tetap fleksibel untuk konten panjang */
+    background-color: white;
+    padding: 30px; /* Menambah ruang padding agar lebih lega */
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    margin: 0 auto;
+    display: flex; 
+    flex-direction: column;
+    justify-content: center; /* Memusatkan konten secara vertikal */
+}
+
+
+/* Form Styles */
+label {
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+    color: #333;
+}
+
+input[type="radio"],
+input[type="number"] {
+    margin-right: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+input[type="number"] {
+    width: calc(100% - 20px);
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+/* Button Style */
+.choice-button {
+    background-color: transparent;
+    border: 2px solid #ccc;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    color: black;
+}
+
+.choice-button.selected {
+    background-color: green;
+    border-color: green;
+    color: black;
+}
+
+.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    width: 80%;
+    max-width: 600px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
