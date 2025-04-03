@@ -14,6 +14,7 @@ from sqlalchemy import Column, Integer, TIMESTAMP, func
 from datetime import datetime
 from models.models import db, User, Riwayat, DoctorProfile
 from flask_mail import Mail, Message
+from flask import Flask, url_for
 import os
 import joblib
 import numpy as np
@@ -26,7 +27,7 @@ model_path = os.path.join(os.getcwd(), 'storage/ml_models/model_entropy.pkl')
 model = joblib.load(model_path)
 
 # Inisialisasi aplikasi Flask
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'supersecretkey') 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
