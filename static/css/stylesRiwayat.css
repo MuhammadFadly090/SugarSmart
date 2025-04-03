@@ -138,39 +138,3 @@
     background-color: #138496; /* Warna latar saat hover */
     border-color: #117a8b; /* Warna border saat hover */
 }
-
-/* Responsif: Saat layar lebih kecil dari 768px */
-@media (max-width: 768px) {
-    .riwayat-container {
-        padding: 10px; /* Padding lebih kecil */
-    }
-
-    .table thead {
-        display: none; /* Sembunyikan header pada layar kecil */
-    }
-
-    .table tbody tr {
-        display: block; /* Ubah tampilan baris menjadi block */
-        margin-bottom: 10px; /* Jarak antar baris */
-        border: 1px solid #ddd; /* Border untuk setiap baris */
-        border-radius: 4px; /* Sudut melengkung */
-    }
-
-    .table tbody td {
-        display: block; /* Ubah tampilan sel menjadi block */
-        text-align: right; /* Teks rata kanan */
-        padding: 8px; /* Padding sel */
-        border-bottom: 1px solid #ddd; /* Garis bawah sel */
-    }
-
-    .table tbody td::before {
-        content: attr(data-label); /* Tambahkan label dari data-label */
-        float: left; /* Teks label rata kiri */
-        font-weight: bold; /* Tebalkan teks label */
-        text-transform: uppercase; /* Ubah teks menjadi huruf kapital */
-    }
-
-    .table tbody td:last-child {
-        border-bottom: 0; /* Hilangkan garis bawah pada sel terakhir */
-    }
-}
