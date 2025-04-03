@@ -11,6 +11,25 @@
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesregister.css') }}">
+
+    <script>
+        // Variabel kunci yang harus dimasukkan oleh pengguna
+        const key = "Ab12Cd34"; // Gantilah dengan kunci yang dibuat secara dinamis jika perlu
+
+        function validateKey() {
+            let inputKey = document.getElementById("key").value;
+            let keyError = document.getElementById("key-error");
+            let submitButton = document.getElementById("submit-btn");
+
+            if (inputKey === key) {
+                keyError.textContent = "";
+                submitButton.disabled = false;
+            } else {
+                keyError.textContent = "Invalid Key. Please enter the correct key.";
+                submitButton.disabled = true;
+            }
+        }
+    </script>
 </head>
 <body>
 
@@ -57,9 +76,16 @@
                 {{ form.password_confirmation() }}
             </div>
 
+            <!-- Key Input -->
+            <div>
+                <label for="key">Enter Key</label>
+                <input type="text" id="key" name="key" required onkeyup="validateKey()">
+                <p id="key-error" style="color: red;"></p>
+            </div>
+
             <!-- Submit Button -->
             <div>
-                <button type="submit">Register</button>
+                <button type="submit" id="submit-btn" disabled>Register</button>
             </div>
         </form>
 
