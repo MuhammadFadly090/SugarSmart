@@ -22,6 +22,8 @@ import json
 import sklearn
 import os
 
+load_dotenv()
+
 # Memuat model
 model_path = os.path.join(os.getcwd(), 'storage/ml_models/model_entropy.pkl')
 model = joblib.load(model_path)
@@ -46,6 +48,7 @@ db.init_app(app)
 migrate = Migrate(app, db)
 csrf = CSRFProtect(app)
 
+app.config['SKIP_LOGIN'] = True
 # Nonaktifkan CSRF hanya untuk endpoint /predict
 #csrf.exempt("/predict")
 
@@ -224,7 +227,7 @@ all_sorted_features = [f[0] for f in sorted_features]
 # Rute dashboard
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
-    if 'user_id' not in session:
+    if not app.config.get('SKIP_LOGIN', False):
         flash('Silakan login terlebih dahulu.')
         return redirect(url_for('login'))
 

@@ -143,6 +143,13 @@ h2 {
 
 /* Lebar lebih kecil untuk tablet dan mobile */
 @media (max-width: 768px) {
+    .box {
+        width: 190% !important;
+        max-width: 700px !important;
+        margin-left: -140px !important;
+
+    }
+
     .sidebar {
         transform: translateX(-100%); /* Sembunyikan sidebar di layar kecil */
         z-index: 1000 !important; /* Pastikan di atas konten lain */
@@ -179,7 +186,8 @@ h2 {
 @media (max-width: 480px) {
     .box {
         max-width: 100% !important;
-        padding: 15px !important;
+        padding: 20px !important;
+        margin-left: -17px !important;
     }
 }
 
